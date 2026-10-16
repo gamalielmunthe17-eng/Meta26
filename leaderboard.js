@@ -9,15 +9,18 @@
   const get = id => document.getElementById(id);
   const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   get("view-title").textContent = isResult ? "Result Keseluruhan" : klass || "Best Time Keseluruhan";
+  const eventDate = get("event-date");
+  if (eventDate) eventDate.textContent = klass ? "18 Oktober 2026" : "";
   document.title = "META 2026 - " + get("view-title").textContent;
+  if (!isResult) document.querySelector(".pagination").hidden = true;
   function render() {
     const q = get("driver-search").value.trim().toLowerCase();
     const base = isResult ? rows : RaceData.best(rows, klass);
     const ranked = base.map((r,i) => ({...r, rank: i + 1}));
     const filtered = ranked.filter(r => `${r.number} ${r.driver} ${r.klass}`.toLowerCase().includes(q));
-    const count = Math.max(1, Math.ceil(filtered.length / config.pageSize));
+    const count = Math.max(1, isResult ? Math.ceil(filtered.length / config.pageSize) : 1);
     currentPage = Math.min(currentPage, count);
-    const page = filtered.slice((currentPage-1)*config.pageSize, currentPage*config.pageSize);
+    const page = isResult ? filtered.slice((currentPage-1)*config.pageSize, currentPage*config.pageSize) : filtered;
     get("leaderboard-body").innerHTML = page.length ? page.map(r => `
       <div class="driver-row ${!isResult && r.rank <= 3 ? "rank-"+r.rank : ""}">
         <div class="rank">${r.rank}</div><div class="participant-number">${esc(r.number)}</div>
