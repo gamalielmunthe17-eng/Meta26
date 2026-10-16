@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>META 2026 - Live Timing</title>
+
+  <style>
+
+    /* =====================================================
+       RESET
+    ===================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+
+      min-height: 100vh;
+
+      background:
+        url("Best-Time/assets/images/IMG_3285.PNG")
+        no-repeat
+        center top;
+
+      background-size: cover;
+      background-attachment: fixed;
+
+      color: #171717;
+
+      overflow-x: hidden;
+    }
+
+
+    /* =====================================================
+       PAGE
+    ===================================================== */
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      padding:
+        clamp(455px, 52.5vh, 500px)
+        24px
+        40px;
+    }
+
+
+    /* =====================================================
+       CONTENT
+    ===================================================== */
+
+    .content {
+      width: min(900px, 92vw);
+      text-align: center;
+    }
+
+
+    /* =====================================================
+       EVENT INFO
+    ===================================================== */
+
+    .event-title {
+      margin-bottom: 22px;
+    }
+
+    .event-title p {
+      color: #252525;
+
+      font-size: 0.78rem;
+      font-weight: 800;
+
+      letter-spacing: 3px;
+
+      text-transform: uppercase;
+    }
+
+
+    /* =====================================================
+       SECTION TITLE
+    ===================================================== */
+
+    .section-heading {
+      margin-bottom: 17px;
+    }
+
+    .section-heading .small-label {
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 9px;
+
+      color: #d71920;
+
+      font-size: 0.68rem;
+      font-weight: 900;
+
+      letter-spacing: 2.5px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 7px;
+    }
+
+    .section-heading .small-label::before,
+    .section-heading .small-label::after {
+      content: "";
+
+      width: 25px;
+      height: 2px;
+
+      background: #d71920;
+    }
+
+    .section-heading h2 {
+      color: #171717;
+
+      font-size: clamp(1.55rem, 3vw, 2.2rem);
+
+      font-weight: 900;
+
+      letter-spacing: -0.5px;
+
+      text-transform: uppercase;
+    }
+
+
+    /* =====================================================
+       CARDS
+    ===================================================== */
+
+    .menu {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 16px;
+
+      width: 100%;
+    }
+
+
+    /* =====================================================
+       CARD BASE
+    ===================================================== */
+
+    .race-card {
+      position: relative;
+
+      min-height: 205px;
+
+      padding: 24px 25px 22px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.97),
+          rgba(239, 239, 239, 0.96)
+        );
+
+      border-radius: 16px;
+
+      text-decoration: none;
+
+      color: #171717;
+
+      text-align: left;
+
+      overflow: hidden;
+
+      border:
+        1px solid
+        rgba(0, 0, 0, 0.08);
+
+      box-shadow:
+        0 14px 35px
+        rgba(0, 0, 0, 0.17);
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+
+    /* =====================================================
+       HOVER
+    ===================================================== */
+
+    .race-card:hover {
+      transform: translateY(-7px);
+
+      box-shadow:
+        0 22px 45px
+        rgba(0, 0, 0, 0.25);
+    }
+
+
+    /* =====================================================
+       CARD TOP
+    ===================================================== */
+
+    .card-top {
+      display: flex;
+
+      justify-content: space-between;
+      align-items: flex-start;
+
+      margin-bottom: 32px;
+    }
+
+
+    /* =====================================================
+       NUMBER
+    ===================================================== */
+
+    .card-number {
+      font-family:
+        "Arial Black",
+        Arial,
+        sans-serif;
+
+      font-size: 0.75rem;
+
+      font-weight: 900;
+
+      letter-spacing: 2px;
+
+      color: #999;
+    }
+
+
+    /* =====================================================
+       ICON
+    ===================================================== */
+
+    .card-icon {
+      width: 49px;
+      height: 49px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      font-size: 1.65rem;
+
+      background: #171717;
+
+      box-shadow:
+        0 7px 15px
+        rgba(0, 0, 0, 0.15);
+
+      transition:
+        transform 0.25s ease;
+    }
+
+    .race-card:hover .card-icon {
+      transform:
+        rotate(-8deg)
+        scale(1.08);
+    }
+
+
+    /* =====================================================
+       CARD TITLE
+    ===================================================== */
+
+    .card-title {
+      font-size: 1.45rem;
+
+      font-weight: 900;
+
+      letter-spacing: -0.3px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 8px;
+    }
+
+
+    /* =====================================================
+       DESCRIPTION
+    ===================================================== */
+
+    .card-description {
+      color: #777;
+
+      font-size: 0.78rem;
+
+      font-weight: 600;
+
+      line-height: 1.5;
+
+      max-width: 270px;
+    }
+
+
+    /* =====================================================
+       ARROW
+    ===================================================== */
+
+    .arrow {
+      position: absolute;
+
+      right: 24px;
+      bottom: 24px;
+
+      width: 34px;
+      height: 34px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      color: #ffffff;
+
+      background: #171717;
+
+      font-size: 1.1rem;
+
+      font-weight: 900;
+
+      transition:
+        transform 0.25s ease,
+        background 0.25s ease;
+    }
+
+    .race-card:hover .arrow {
+      transform: translateX(4px);
+    }
+
+
+    /* =====================================================
+       RACING ACCENT
+    ===================================================== */
+
+    .race-card::after {
+      content: "";
+
+      position: absolute;
+
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      height: 7px;
+    }
+
+
+    /* =====================================================
+       BEST TIME
+    ===================================================== */
+
+    .best-time::after {
+      background: #d71920;
+    }
+
+    .best-time::before {
+      content: "";
+
+      position: absolute;
+
+      width: 120px;
+      height: 240px;
+
+      right: -80px;
+      top: -70px;
+
+      background:
+        rgba(215, 25, 32, 0.055);
+
+      transform: rotate(24deg);
+    }
+
+    .best-time:hover .card-title {
+      color: #d71920;
+    }
+
+    .best-time:hover .arrow {
+      background: #d71920;
+    }
+
+
+    /* =====================================================
+       RESULT
+    ===================================================== */
+
+    .result::after {
+      background: #ffd426;
+    }
+
+    .result::before {
+      content: "";
+
+      position: absolute;
+
+      width: 120px;
+      height: 240px;
+
+      right: -80px;
+      top: -70px;
+
+      background:
+        rgba(255, 212, 38, 0.1);
+
+      transform: rotate(24deg);
+    }
+
+    .result:hover .card-title {
+      color: #c79d00;
+    }
+
+    .result:hover .arrow {
+      background: #d71920;
+    }
+
+
+    /* =====================================================
+       CHECKER DETAIL
+    ===================================================== */
+
+    .checker {
+      position: absolute;
+
+      right: 74px;
+      bottom: 27px;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 5px);
+
+      grid-template-rows:
+        repeat(2, 5px);
+
+      gap: 2px;
+
+      opacity: 0.23;
+    }
+
+    .checker span {
+      width: 5px;
+      height: 5px;
+
+      background: #171717;
+    }
+
+    .checker span:nth-child(2),
+    .checker span:nth-child(4),
+    .checker span:nth-child(6) {
+      opacity: 0.25;
+    }
+
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+
+    .footer {
+      margin-top: 24px;
+
+      color: #555;
+
+      font-size: 0.68rem;
+
+      font-weight: 900;
+
+      letter-spacing: 3px;
+
+      text-transform: uppercase;
+    }
+
+
+    /* =====================================================
+       DESKTOP
+       > 900px
+
+       Dibuat mengikuti proporsi tampilan 1345 x 870
+    ===================================================== */
+
+    @media (min-width: 901px) {
+
+      .page {
+        padding-top:
+          clamp(
+            455px,
+            52.5vh,
+            500px
+          );
+      }
+
+      .content {
+        width: min(900px, 88vw);
+      }
+
+      .event-title {
+        margin-bottom: 22px;
+      }
+
+      .event-title p {
+        font-size: 0.78rem;
+
+        letter-spacing: 3px;
+      }
+
+      .section-heading {
+        margin-bottom: 17px;
+      }
+
+      .section-heading h2 {
+        font-size: 2rem;
+      }
+
+      .menu {
+        gap: 16px;
+      }
+
+      .race-card {
+        min-height: 205px;
+      }
+
+    }
+
+
+    /* =====================================================
+       TABLET
+       601px - 900px
+    ===================================================== */
+
+    @media
+    (min-width: 601px)
+    and
+    (max-width: 900px) {
+
+      .page {
+        padding-top:
+          clamp(
+            280px,
+            34vh,
+            360px
+          );
+      }
+
+      .content {
+        width: min(
+          720px,
+          91vw
+        );
+      }
+
+      .event-title {
+        margin-bottom: 22px;
+      }
+
+      .race-card {
+        min-height: 190px;
+
+        padding: 21px;
+      }
+
+      .card-top {
+        margin-bottom: 27px;
+      }
+
+      .card-title {
+        font-size: 1.25rem;
+      }
+
+      .card-description {
+        font-size: 0.73rem;
+
+        max-width: 220px;
+      }
+
+    }
+
+
+    /* =====================================================
+       MOBILE
+       <= 600px
+    ===================================================== */
+
+    @media (max-width: 600px) {
+
+      body {
+        background-attachment: scroll;
+
+        background-size: auto 100%;
+
+        background-position: center top;
+      }
+
+      .page {
+        justify-content: flex-start;
+
+        padding:
+          275px
+          16px
+          30px;
+      }
+
+      .content {
+        width: 100%;
+
+        max-width: 470px;
+      }
+
+
+      /* EVENT */
+
+      .event-title {
+        margin-bottom: 18px;
+      }
+
+      .event-title p {
+        font-size: 0.61rem;
+
+        letter-spacing: 1.6px;
+      }
+
+
+      /* SECTION */
+
+      .section-heading {
+        margin-bottom: 13px;
+      }
+
+      .section-heading .small-label {
+        font-size: 0.57rem;
+
+        letter-spacing: 1.8px;
+      }
+
+      .section-heading h2 {
+        font-size: 1.4rem;
+      }
+
+
+      /* CARDS */
+
+      .menu {
+        grid-template-columns: 1fr;
+
+        gap: 11px;
+      }
+
+      .race-card {
+        min-height: 138px;
+
+        padding:
+          18px
+          19px;
+
+        border-radius: 13px;
+      }
+
+      .card-top {
+        margin-bottom: 16px;
+      }
+
+      .card-icon {
+        width: 39px;
+        height: 39px;
+
+        font-size: 1.25rem;
+      }
+
+      .card-number {
+        font-size: 0.65rem;
+      }
+
+      .card-title {
+        font-size: 1.12rem;
+
+        margin-bottom: 5px;
+      }
+
+      .card-description {
+        font-size: 0.67rem;
+
+        max-width: 72%;
+      }
+
+      .arrow {
+        right: 18px;
+        bottom: 19px;
+
+        width: 30px;
+        height: 30px;
+
+        font-size: 0.9rem;
+      }
+
+      .checker {
+        display: none;
+      }
+
+      .race-card::after {
+        height: 5px;
+      }
+
+      .footer {
+        margin-top: 18px;
+
+        font-size: 0.59rem;
+
+        letter-spacing: 2.3px;
+      }
+
+    }
+
+
+    /* =====================================================
+       SMALL MOBILE
+       <= 400px
+    ===================================================== */
+
+    @media (max-width: 400px) {
+
+      .page {
+        padding-top: 235px;
+      }
+
+      .event-title p {
+        font-size: 0.56rem;
+      }
+
+      .section-heading h2 {
+        font-size: 1.25rem;
+      }
+
+      .race-card {
+        min-height: 132px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+  <main class="page">
+
+    <div class="content">
+
+
+      <!-- =================================================
+           EVENT INFO
+      ================================================== -->
+
+      <header class="event-title">
+
+        <p>
+          18 Oktober 2026
+          &nbsp;•&nbsp;
+          Live Timing
+        </p>
+
+      </header>
+
+
+      <!-- =================================================
+           SECTION TITLE
+      ================================================== -->
+
+      <div class="section-heading">
+
+        <div class="small-label">
+          Live Results
+        </div>
+
+        <h2>
+          Practice Results
+        </h2>
+
+      </div>
+
+
+      <!-- =================================================
+           MENU
+      ================================================== -->
+
+      <section class="menu">
+
+
+        <!-- =================================================
+             BEST TIME
+        ================================================== -->
+
+        <a
+          href="./Best-Time/"
+          class="race-card best-time"
+        >
+
+          <div class="card-top">
+
+            <div class="card-number">
+              01
+            </div>
+
+            <div class="card-icon">
+              🏆
+            </div>
+
+          </div>
+
+
+          <div class="card-title">
+            Best Time
+          </div>
+
+
+          <div class="card-description">
+            Overall ranking based on the fastest recorded lap
+          </div>
+
+
+          <div class="checker">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+          </div>
+
+
+          <div class="arrow">
+            →
+          </div>
+
+        </a>
+
+
+        <!-- =================================================
+             RESULT
+        ================================================== -->
+
+        <a
+          href="./Result/"
+          class="race-card result"
+        >
+
+          <div class="card-top">
+
+            <div class="card-number">
+              02
+            </div>
+
+            <div class="card-icon">
+              🏁
+            </div>
+
+          </div>
+
+
+          <div class="card-title">
+            Result
+          </div>
+
+
+          <div class="card-description">
+            View practice lap results and recorded times
+          </div>
+
+
+          <div class="checker">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+          </div>
+
+
+          <div class="arrow">
+            →
+          </div>
+
+        </a>
+
+      <a href="./Best-Time/?class=FWD%201" class="race-card best-time"><div class="card-top"><div class="card-number">03</div><div class="card-icon">🏎️</div></div><div class="card-title">FWD 1</div><div class="card-description">Best time peserta kelas FWD 1</div><div class="arrow">→</div></a>
+<a href="./Best-Time/?class=FWD%202" class="race-card best-time"><div class="card-top"><div class="card-number">04</div><div class="card-icon">🏎️</div></div><div class="card-title">FWD 2</div><div class="card-description">Best time peserta kelas FWD 2</div><div class="arrow">→</div></a>
+<a href="./Best-Time/?class=FWD%203" class="race-card best-time"><div class="card-top"><div class="card-number">05</div><div class="card-icon">🏎️</div></div><div class="card-title">FWD 3</div><div class="card-description">Best time peserta kelas FWD 3</div><div class="arrow">→</div></a>
+<a href="./Best-Time/?class=RWD%201" class="race-card best-time"><div class="card-top"><div class="card-number">06</div><div class="card-icon">🏎️</div></div><div class="card-title">RWD 1</div><div class="card-description">Best time peserta kelas RWD 1</div><div class="arrow">→</div></a>
+<a href="./Best-Time/?class=RWD%202" class="race-card best-time"><div class="card-top"><div class="card-number">07</div><div class="card-icon">🏎️</div></div><div class="card-title">RWD 2</div><div class="card-description">Best time peserta kelas RWD 2</div><div class="arrow">→</div></a>
+<a href="./Best-Time/?class=RWD%203" class="race-card best-time"><div class="card-top"><div class="card-number">08</div><div class="card-icon">🏎️</div></div><div class="card-title">RWD 3</div><div class="card-description">Best time peserta kelas RWD 3</div><div class="arrow">→</div></a>
+<a href="./Best-Time/?class=FFA" class="race-card best-time"><div class="card-top"><div class="card-number">09</div><div class="card-icon">🏎️</div></div><div class="card-title">FFA</div><div class="card-description">Best time peserta kelas FFA</div><div class="arrow">→</div></a>
+<a href="./Best-Time/?class=EV" class="race-card best-time"><div class="card-top"><div class="card-number">10</div><div class="card-icon">🏎️</div></div><div class="card-title">EV</div><div class="card-description">Best time peserta kelas EV</div><div class="arrow">→</div></a>
+</section>
+
+
+      <!-- =================================================
+           FOOTER
+      ================================================== -->
+
+      <footer class="footer">
+        META 2026 SERIES
+      </footer>
+
+
+    </div>
+
+  </main>
+
+</body>
+
+</html>

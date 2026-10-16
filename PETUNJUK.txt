@@ -1,0 +1,15 @@
+META 2026 — satu koneksi SheetBest
+
+1. Gunakan satu tab Google Sheets dengan header persis:
+   NO PESERTA | DRIVER | KELAS | RESULT
+2. Format kolom NO PESERTA dan RESULT sebagai Plain text/Teks biasa SEBELUM mengisi data agar 012 dan 00:51.80 tidak diubah Google Sheets.
+3. Setiap percobaan wajib baris baru. Nomor peserta harus konsisten dan unik untuk satu driver; nama peserta sama tidak digabung jika nomornya berbeda.
+4. KELAS: FWD 1, FWD 2, FWD 3, RWD 1, RWD 2, RWD 3, FFA, EV.
+5. Hubungkan satu tab tersebut ke SheetBest. Salin endpoint ke sheetUrl dalam config.js. URL sudah memakai endpoint SheetBest yang diberikan. Pastikan tab sumber memakai struktur baru.
+6. Upload seluruh isi folder ini ke hosting yang sama seperti proyek lama. Buka melalui web server/Live Server, bukan sekadar double-click file HTML.
+
+Menu Result menampilkan seluruh percobaan sesuai urutan sheet, termasuk waktu kosong/DNF/DNS. Best Time memilih waktu valid tercepat per nomor peserta dari seluruh kelas. Menu kelas memilih waktu tercepat per nomor peserta dalam kelas terpilih. Peserta yang mengikuti beberapa kelas akan muncul di masing-masing kelas; overall hanya mengambil satu waktu tercepat dari semua kelas.
+Format waktu didukung: 49.81, 00:49.81, 1:10.500, 00.49.81. Koma desimal juga didukung. DNF/DNS/kosong/nol/waktu tidak valid tidak masuk Best Time. Waktu seri mengikuti urutan kemunculan di sheet.
+Setiap halaman 5 peserta/baris, dilengkapi pencarian dan refresh 30 detik. Perpindahan kelas memuat halaman baru, lalu membaca endpoint yang sama. Satu koneksi bukan berarti hanya satu request: setiap halaman/pengunjung tetap menggunakan request SheetBest.
+
+CONTOH-DATA.csv hanya contoh; tidak otomatis ditampilkan di web.
