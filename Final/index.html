@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>META 2026 - Final</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 32px 16px;
+      color: #171717;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #222 url("../Best-Time/assets/images/IMG_3285.PNG") center top / cover fixed no-repeat;
+    }
+    main {
+      width: min(1050px, 100%);
+      margin: 280px auto 0;
+      overflow: hidden;
+      border-radius: 14px;
+      background: rgba(248,248,248,.97);
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+    }
+    header { padding: 20px; color: white; text-align: center; background: #171717; border-left: 7px solid #d71920; }
+    h1 { margin: 0 0 6px; font-size: clamp(1.5rem, 5vw, 2rem); text-transform: uppercase; }
+    header p { margin: 0; color: #ccc; font-size: .8rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+    .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; padding: 14px; background: #eee; }
+    .toolbar a, .class-nav a { color: #171717; font-weight: 700; text-decoration: none; }
+    .toolbar label { display: flex; align-items: center; gap: 8px; font-size: .9rem; font-weight: 700; }
+    input { min-width: min(280px, 65vw); padding: 9px 10px; border: 1px solid #aaa; border-radius: 5px; font: inherit; }
+    .class-nav { display: flex; gap: 8px; overflow-x: auto; padding: 12px; background: #fff; }
+    .class-nav a { flex: 0 0 auto; padding: 9px 12px; border: 1px solid #ccc; border-radius: 6px; }
+    .class-nav a[aria-current="page"] { color: white; border-color: #d71920; background: #d71920; }
+    .table { overflow-x: auto; }
+    .result-row {
+      display: grid;
+      grid-template-columns: 56px 66px minmax(180px, 1.5fr) minmax(150px, 1fr) 120px 120px;
+      align-items: center;
+      gap: 10px;
+      min-width: 750px;
+      padding: 14px 18px;
+      border-bottom: 1px solid #ddd;
+      background: white;
+    }
+    .table-head { color: white; font-size: .78rem; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; background: #d71920; border-bottom: 3px solid #ffd426; }
+    .rank { text-align: center; font-size: 1.05rem; font-weight: 900; }
+    .number, .time, .elimination { text-align: center; font-family: "Courier New", monospace; font-weight: 800; white-space: nowrap; }
+    .driver, .car { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .driver { font-weight: 800; text-transform: uppercase; }
+    .rank-1 { background: linear-gradient(90deg, #ffe681, #fff9dc 35%, #fff 100%); border-left: 6px solid #ffd426; }
+    .rank-2 { background: linear-gradient(90deg, #d7d7d7, #f2f2f2 35%, #fff 100%); border-left: 6px solid #a8a8a8; }
+    .rank-3 { background: linear-gradient(90deg, #dfb58e, #f7e6d5 35%, #fff 100%); border-left: 6px solid #b87333; }
+    .rank-1 .rank, .rank-1 .time { color: #9b7600; }
+    .rank-2 .rank, .rank-2 .time { color: #666; }
+    .rank-3 .rank, .rank-3 .time { color: #8b4f20; }
+    .message { padding: 32px 16px; color: #555; text-align: center; font-weight: 700; }
+    .error { color: #d71920; }
+    main::after { display: block; height: 8px; content: ""; background: linear-gradient(#171717 0 33%, #d71920 33% 66%, #ffd426 66%); }
+    @media (max-width: 600px) {
+      body { padding: 12px; background-size: auto 100%; }
+      main { margin-top: 130px; }
+      .toolbar { align-items: stretch; }
+      .toolbar label { justify-content: space-between; }
+      input { min-width: 0; width: 65%; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1 id="class-title">Final</h1>
+      <p>Hasil akhir META 2026</p>
+    </header>
+    <div class="toolbar">
+      <a href="../">← Menu</a>
+      <label for="driver-search">Cari peserta <input id="driver-search" type="search" placeholder="Nomor, driver, atau mobil"></label>
+    </div>
+    <nav id="class-nav" class="class-nav" aria-label="Pilih kelas final"></nav>
+    <section class="table" aria-label="Hasil final kelas">
+      <div class="result-row table-head">
+        <div>Pos</div><div>No.</div><div>Driver</div><div>Mobil</div><div>Final</div><div>Elimination</div>
+      </div>
+      <div id="final-results" aria-live="polite"></div>
+    </section>
+  </main>
+  <script src="../final-data.js"></script>
+  <script src="../final.js"></script>
+</body>
+</html>
